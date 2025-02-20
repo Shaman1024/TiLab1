@@ -30,7 +30,7 @@ public class ColumnsAlgorithm {
         input = validation.validate(input);
         key = validation.validate(key);
 
-
+        char[][] matrix = new char[input.length()/key.length() + 1][key.length()];
 
         return null;
     }
