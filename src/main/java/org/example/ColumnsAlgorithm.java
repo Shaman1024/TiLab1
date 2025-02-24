@@ -109,7 +109,7 @@ public class ColumnsAlgorithm {
             keySb.setCharAt(index, ('б'));
 
             for (int j = 0; j < rows; j++) {
-                matrix[j][index] = inputSb.charAt(index * rows + j);
+                matrix[j][index] = inputSb.charAt(i * rows + j);
             }
         }
 
