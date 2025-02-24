@@ -3,7 +3,10 @@ package org.example;
 public class Main {
     public static void main(String[] args) {
         ColumnsAlgorithm columnsAlgorithm = new ColumnsAlgorithm();
-        columnsAlgorithm.columnsAlgorithm("АБВГД ЕЁЖЗИ ЙКЛМН ОПРСТ УФХЦЧ ШЩ", "абАААААд");
-        System.out.println("Hello, World!");
+        String key = "АБАААААд";
+        String input = "АБВГД ЕЁЖЗИ ЙКЛМН ОПРСТ УФХЦЧ ШЩ";
+        String encryption = columnsAlgorithm.columnsEncryption(input, key);
+        System.out.println(columnsAlgorithm.columnsDecryption(encryption , key));
+
     }
 }

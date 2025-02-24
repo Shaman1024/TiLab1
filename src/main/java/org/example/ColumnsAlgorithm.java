@@ -2,27 +2,49 @@ package org.example;
 
 public class ColumnsAlgorithm {
 
-
-    private char[][] sortMatrix(char[][] matrix, int rows, int columns) {
-        char temp = ' ';
-        for (int i = 0; i < columns; i++) {
-            for (int j  = 0; i < columns - i - 1; i++) {
-                if (matrix[0][j] > matrix[0][j + 1]) {
-                    for (int k = 0; k < rows; k++) {
-                        temp = matrix[k][j];
-                        matrix[k][j] = matrix[k + 1][j];
-                        matrix[k + 1][j] = temp;
-                    }
-                }
+    public void outputMatrix(char[][] matrix, int rows, int columns){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(matrix[i][j] + " ");
             }
+            System.out.println();
         }
-
-        return matrix;
     }
 
-    public String columnsAlgorithm(String input, String key) {
+    private String readMatrix(char[][] matrix, String key) {
+        StringBuilder keySb = new StringBuilder();
+        StringBuilder newLineSb = new StringBuilder();
+        keySb.append(key);
+        char min = 'Я' + 1;
+        int index = -1;
+        int maxCounter = keySb.length();
+        int counter = 0;
+        for (int i = 0; i < maxCounter; i++) {
+
+            min = 'а';
+            for (counter = 0; counter < keySb.length(); counter++) {
+                if (keySb.charAt(counter) < min) {
+                    index = counter;
+                    min = keySb.charAt(counter);
+                }
+            }
+            keySb.setCharAt(index, ('б'));
+
+            for (int j = 0; j < matrix.length; j++) {
+                if (matrix[j][index] != ' ') {
+                    newLineSb.append(matrix[j][index]);
+                }
+            }
+
+        }
+
+        return newLineSb.toString();
+    }
+
+    public String columnsEncryption(String input, String key) {
         Validation validation = new Validation();
         input = validation.validate(input);
+
         key = validation.validate(key);
         int rows = input.length()/key.length() + 1;
         int columns = key.length();
@@ -32,8 +54,8 @@ public class ColumnsAlgorithm {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (counter >= input.length() - 1){
-                    matrix[i][j] = ' ';
+                if (counter >= input.length()){
+                    matrix[i][j] = 'Ъ';
                     continue;
                 }
                 matrix[i][j] = input.charAt(counter);
@@ -41,27 +63,71 @@ public class ColumnsAlgorithm {
             }
         }
 
-        matrix = sortMatrix(matrix, rows, columns);
+        outputMatrix(matrix, rows, columns);
+        String line = readMatrix(matrix, key);
+        System.out.println(line);
 
-        StringBuilder sb = new StringBuilder();
-        counter = 0;
+        return readMatrix(matrix, key);
+    }
 
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
-                if (matrix[j][i] == ' '){
-                    continue;
+    public String columnsDecryption(String input, String key) {
+        Validation validation = new Validation();
+        input = validation.validate(input);
+        key = validation.validate(key);
+        int rows = 0;
+        if (input.length() % key.length() != 0) {
+            rows = input.length()/key.length() + 1;
+        } else {
+            rows = input.length()/key.length();
+        }
+        int columns = key.length();
+
+        char[][] matrix = new char[rows][columns];
+
+        StringBuilder keySb = new StringBuilder();
+        StringBuilder inputSb = new StringBuilder();
+        StringBuilder newLineSb = new StringBuilder();
+        keySb.append(key);
+        inputSb.append(input);
+
+        char min = 'Я' + 1;
+        int index = -1;
+        int maxCounter = keySb.length();
+        int counter = 0;
+        int lastRowCounter = input.length() % key.length();
+
+        for (int i = 0; i < maxCounter; i++) {
+            min = 'а';
+
+            for (counter = 0; counter < keySb.length(); counter++) {
+                if (keySb.charAt(counter) < min) {
+                    index = counter;
+                    min = keySb.charAt(counter);
                 }
-                sb.append(matrix[j][i]);
-                counter++;
-                if (counter == 5) {
-                    sb.append(' ');
-                    counter = 0;
+            }
+
+            keySb.setCharAt(index, ('б'));
+
+            for (int j = 0; j < rows; j++) {
+                matrix[j][index] = inputSb.charAt(index * rows + j);
+            }
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matrix[i][j] != ' ') {
+                    newLineSb.append(matrix[i][j]);
                 }
             }
         }
-        System.out.println(sb.toString());
 
-        return sb.toString();
+        return newLineSb.toString();
     }
+
+    // найти наименьший элемент ключа
+    // запомнить индекс элемента, взять с шифротекста длина_столбца символов начиная с индекс*длина_стобца
+    // записать их в столбец матрицы
+    // повторить
+    // прочитать матрицу построчно
 
 }
