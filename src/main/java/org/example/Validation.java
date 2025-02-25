@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.Vigenere.RUSSIAN_ALPHABET;
+
 public class Validation {
     public Validation() {
     }
@@ -7,10 +9,12 @@ public class Validation {
     public String validate(String input) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i != input.length(); i++) {
-            if ((input.charAt(i) >= 'А' && input.charAt(i) <= 'Я') || (input.charAt(i) >= 'а' && input.charAt(i) <= 'я')) {
-                sb.append(input.charAt(i));
-            }
+        char plainChar = input.charAt(i);
+
+        if (RUSSIAN_ALPHABET.indexOf(plainChar) == -1) {
+            // Символ не из русского алфавита, оставляем как есть
+            ciphertext.append(plainChar);
+            continue;
         }
         // не забыть изменить валидацию при отсутствии валидных элементов
         return sb.toString().toUpperCase();
