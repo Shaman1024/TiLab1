@@ -44,8 +44,12 @@ public class ColumnsAlgorithm {
     public String columnsEncryption(String input, String key) {
         Validation validation = new Validation();
         input = validation.validate(input);
-
         key = validation.validate(key);
+
+        if (input == null || key == null) {
+            return "Invalid input or key!";
+        }
+
         int rows = input.length()/key.length() + 1;
         int columns = key.length();
 
@@ -74,6 +78,11 @@ public class ColumnsAlgorithm {
         Validation validation = new Validation();
         input = validation.validate(input);
         key = validation.validate(key);
+
+        if (input == null || key == null) {
+            return "Invalid input or key!";
+        }
+
         int rows = 0;
         if (input.length() % key.length() != 0) {
             rows = input.length()/key.length() + 1;
@@ -89,6 +98,10 @@ public class ColumnsAlgorithm {
         StringBuilder newLineSb = new StringBuilder();
         keySb.append(key);
         inputSb.append(input);
+
+        if (input.length() < key.length()) {
+            keySb.delete(input.length(), key.length());
+        }
 
         char min = 'Я' + 1;
         int index = -1;

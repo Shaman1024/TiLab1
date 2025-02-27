@@ -1,22 +1,25 @@
 package org.example;
 
-import static org.example.Vigenere.RUSSIAN_ALPHABET;
-
 public class Validation {
-    public Validation() {
-    }
+    public Validation() {}
+
+    public static final String RUSSIAN_ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 
     public String validate(String input) {
         StringBuilder sb = new StringBuilder();
-
-        char plainChar = input.charAt(i);
-
-        if (RUSSIAN_ALPHABET.indexOf(plainChar) == -1) {
-            // Символ не из русского алфавита, оставляем как есть
-            ciphertext.append(plainChar);
-            continue;
+        input = input.toUpperCase();
+        for (int i = 0; i < input.length(); i++) {
+            if (RUSSIAN_ALPHABET.indexOf(input.charAt(i)) != -1) {
+                sb.append(input.charAt(i));
+            }
         }
-        // не забыть изменить валидацию при отсутствии валидных элементов
+
+        if (sb.toString().length() == 0) {
+            return null;
+        }
+
+        //не забыть добавить обработку полностью невалидного ключа
+
         return sb.toString().toUpperCase();
     }
 }
