@@ -50,7 +50,14 @@ public class ColumnsAlgorithm {
             return "Invalid input or key!";
         }
 
-        int rows = input.length()/key.length() + 1;
+        int rows = 0;
+
+        if (input.length() % key.length() == 0) {
+            rows = input.length()/key.length();
+        } else {
+            rows = input.length()/key.length() + 1;
+        }
+
         int columns = key.length();
 
         char[][] matrix = new char[rows][columns];
@@ -101,6 +108,10 @@ public class ColumnsAlgorithm {
 
         if (input.length() < key.length()) {
             keySb.delete(input.length(), key.length());
+        }
+
+        for (int i = 0; i < inputSb.length() % keySb.length(); i++) {
+            inputSb.append('Ъ');
         }
 
         char min = 'Я' + 1;

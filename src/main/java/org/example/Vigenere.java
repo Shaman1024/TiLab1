@@ -1,6 +1,5 @@
 package org.example;
 
-
 public class Vigenere {
 
     public static final String RUSSIAN_ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
@@ -16,9 +15,9 @@ public class Vigenere {
             return "Invalid input or key!";
         }
 
-
         StringBuilder ciphertext = new StringBuilder();
         StringBuilder extendedKey = new StringBuilder(key);
+        StringBuilder inputSb = new StringBuilder(input);
 
         for (int i = 0; i < input.length(); i++) {
             char plainChar = input.charAt(i);
@@ -28,9 +27,8 @@ public class Vigenere {
             if (i < extendedKey.length()) {
                 keyChar = extendedKey.charAt(i);
             } else {
-                keyChar = ciphertext.charAt(i - extendedKey.length());
+                keyChar = inputSb.charAt(i - key.length());
             }
-
 
             int plainIndex = RUSSIAN_ALPHABET.indexOf(plainChar);
             int keyIndex = RUSSIAN_ALPHABET.indexOf(keyChar);
@@ -40,7 +38,8 @@ public class Vigenere {
             ciphertext.append(encryptedChar);
 
             if (i >= extendedKey.length()) {
-                extendedKey.append(plainChar);
+                extendedKey.append(inputSb.charAt(i - key.length()));
+
             }
         }
         return ciphertext.toString();
@@ -57,6 +56,7 @@ public class Vigenere {
 
         StringBuilder plaintext = new StringBuilder();
         StringBuilder extendedKey = new StringBuilder(key);
+        StringBuilder inputSb = new StringBuilder(input);
 
         for (int i = 0; i < input.length(); i++) {
             char cipherChar = input.charAt(i);
@@ -66,7 +66,7 @@ public class Vigenere {
             if (i < extendedKey.length()) {
                 keyChar = extendedKey.charAt(i);
             } else {
-                keyChar = plaintext.charAt(i - extendedKey.length());
+                keyChar = plaintext.charAt(i - key.length());
             }
 
             int cipherIndex = RUSSIAN_ALPHABET.indexOf(cipherChar);
@@ -81,7 +81,8 @@ public class Vigenere {
             plaintext.append(decryptedChar);
 
             if (i >= extendedKey.length()) {
-                extendedKey.append(cipherChar);
+                extendedKey.append(inputSb.charAt(i - key.length()));
+
             }
         }
         return plaintext.toString();
